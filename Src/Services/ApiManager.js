@@ -21,13 +21,41 @@ const httpStatusChecker = (httpStatus) => {
   }
 };
 
-const getAllMovie = async () => {
+const getAllMovies = async (page) => {
+  const hasInternet = await AppEnvCheck.deviceHasInternet;
+  let result;
+  if (hasInternet) {
+    await axios
+      .get(
+        EnvConfig.DOMAIN_URL +
+          Api.GET_ALL_MOVIES +
+          `?api_key=${AppConfig.apiKey}&sort_by=popularity.desc&page=${page}`,
+      )
+      .then((res) => {
+        const is200 = httpStatusChecker(res.status);
+        if (is200) {
+          const data = res.data;
+          result = data;
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  } else {
+    Alert.alert(
+      'Device has no access to internet. Please try again after connected with Internet.',
+    );
+  }
+  return result;
+};
+
+const getAllGenre = async () => {
   const hasInternet = await AppEnvCheck.deviceHasInternet;
   if (hasInternet) {
     axios
       .get(
         EnvConfig.DOMAIN_URL +
-          Api.GET_MOVIE_LIST +
+          Api.GET_GENRE_MOVIE_LIST +
           `?api_key=${AppConfig.apiKey}`,
       )
       .then((res) => {
@@ -47,4 +75,32 @@ const getAllMovie = async () => {
   }
 };
 
-export {getAllMovie};
+const getSearchMovie = async (query) => {
+  const hasInternet = await AppEnvCheck.deviceHasInternet;
+  let result;
+  if (hasInternet) {
+    await axios
+      .get(
+        EnvConfig.DOMAIN_URL +
+          Api.GET_SEARCH_MOVIE +
+          `?api_key=${AppConfig.apiKey}&query=${query}`,
+      )
+      .then((res) => {
+        const is200 = httpStatusChecker(res.status);
+        if (is200) {
+          const data = res.data;
+          result = data;
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  } else {
+    Alert.alert(
+      'Device has no access to internet. Please try again after connected with Internet.',
+    );
+  }
+  return result;
+};
+
+export {getAllMovies, getAllGenre, getSearchMovie};
