@@ -39,7 +39,7 @@ class Homepage extends Component {
         <MovieCard
           poster={movie.poster_path}
           movieName={movie.title}
-          key={movie.id}
+          movieID={movie.id}
           routing={this.props}
         />
       );
@@ -65,10 +65,17 @@ class Homepage extends Component {
     });
   };
 
+  renderTitle = () => {
+    if (!this.state.search) {
+      return <Text style={{fontWeight: 'bold'}}>Current Trending</Text>;
+    }
+  };
+
   render() {
     return (
       <SafeAreaView style={styles.container}>
         <SearchBar
+          lightTheme
           placeholder="Search Movie..."
           onChangeText={this.updateSearch}
           value={this.state.search}
@@ -79,6 +86,14 @@ class Homepage extends Component {
           onScroll={() => {
             Keyboard.dismiss();
           }}>
+          <View
+            style={{
+              paddingTop: 5,
+              display: 'flex',
+              alignItems: 'center',
+            }}>
+            {this.renderTitle()}
+          </View>
           <View
             style={{
               display: 'flex',

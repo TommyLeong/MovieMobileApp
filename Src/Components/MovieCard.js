@@ -19,7 +19,15 @@ const MovieCard = (props) => {
               uri: `${Api.IMAGE_DOMAIN}${props.poster}`,
             }}
           />
-          <Text style={{textAlign: 'center'}}>{props.movieName}</Text>
+          <Text
+            style={{
+              textAlign: 'center',
+              paddingTop: 5,
+              color: 'rgba(57, 58, 63, 1)',
+              fontWeight: '400',
+            }}>
+            {props.movieName}
+          </Text>
         </View>
       </TouchableOpacity>
     </View>
