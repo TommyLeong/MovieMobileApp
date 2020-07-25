@@ -1,8 +1,16 @@
 import React, {Component} from 'react';
-import {View, Text, SafeAreaView, FlatList, ScrollView} from 'react-native';
+import {
+  View,
+  Text,
+  SafeAreaView,
+  FlatList,
+  ScrollView,
+  Keyboard,
+} from 'react-native';
 import * as ApiManager from '../Services/ApiManager';
 import styles from './Styles/HomepageStyle';
 import MovieCard from '../Components/MovieCard';
+import {SearchBar} from 'react-native-elements';
 
 class Homepage extends Component {
   constructor(props) {
@@ -10,30 +18,67 @@ class Homepage extends Component {
     this.state = {
       data: [],
       page: 1,
+      search: '',
     };
   }
   async componentDidMount() {
+    this.getAllMoviesFromAPI();
+  }
+
+  getAllMoviesFromAPI = async () => {
     const data = await ApiManager.getAllMovies(this.state.page);
     this.setState({
       data: data.results,
     });
-  }
+  };
 
-  renderItem = (movies) => {
-    // console.log('item');
-    // console.log(item);
-    // console.log(item.title);
-    // return
+  renderMovieList = (movies) => {
+    if (movies === undefined) return <View />;
     return movies.map((movie) => {
-      return <MovieCard poster={movie.poster_path} movieName={movie.title} />;
+      return (
+        <MovieCard
+          poster={movie.poster_path}
+          movieName={movie.title}
+          key={movie.id}
+          routing={this.props}
+        />
+      );
+    });
+  };
+
+  updateSearch = (search) => {
+    this.setState({
+      search,
+    });
+  };
+
+  searchMovie = async () => {
+    let data = [];
+    if (this.state.search.length > 0) {
+      data = await ApiManager.getSearchMovie(this.state.search);
+      console.log(data);
+    } else {
+      data = await ApiManager.getAllMovies(this.state.page);
+    }
+    this.setState({
+      data: data.results,
     });
   };
 
   render() {
     return (
-      <SafeAreaView style={styles.cxntainer}>
-        <ScrollView>
-          {/* <Text>Hello Homepage</Text> */}
+      <SafeAreaView style={styles.container}>
+        <SearchBar
+          placeholder="Search Movie..."
+          onChangeText={this.updateSearch}
+          value={this.state.search}
+          onSubmitEditing={this.searchMovie}
+          onClear={this.getAllMoviesFromAPI}
+        />
+        <ScrollView
+          onScroll={() => {
+            Keyboard.dismiss();
+          }}>
           <View
             style={{
               display: 'flex',
@@ -41,14 +86,8 @@ class Homepage extends Component {
               flexDirection: 'row',
               flexWrap: 'wrap',
             }}>
-            {/* <FlatList
-              data={this.state.data}
-              renderItem={this.renderItem}
-              keyExtractor={(item) => item.id}
-            /> */}
-            {this.renderItem(this.state.data)}
+            {this.renderMovieList(this.state.data)}
           </View>
-          {/* <Text>End</Text> */}
         </ScrollView>
       </SafeAreaView>
     );
