@@ -4,13 +4,13 @@ import {View, Text, TouchableOpacity, Image} from 'react-native';
 import Api from '../Services/Api';
 
 const MovieCard = (props) => {
-  console.log(props);
+  const navigation = props.routing.navigation;
   return (
-    <View style={styles.container}>
+    <View style={styles.container} key={props.key}>
       <TouchableOpacity
         style={{width: 'auto', backgroundColor: 'red'}}
         onPress={() => {
-          console.log(props.movieName);
+          navigation.navigate('MovieDetails');
         }}>
         <View style={styles.body}>
           <Image
@@ -19,7 +19,6 @@ const MovieCard = (props) => {
               uri: `${Api.IMAGE_DOMAIN}${props.poster}`,
             }}
           />
-          {/* <View style={{width: 200}}> */}
           <Text style={{textAlign: 'center'}}>{props.movieName}</Text>
         </View>
       </TouchableOpacity>

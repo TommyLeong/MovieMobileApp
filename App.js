@@ -10,14 +10,17 @@ import React, {Component} from 'react';
 import {Provider} from 'react-redux';
 import Homepage from './Src/Containers/Homepage';
 import createStore from './Src/Redux/Reducers';
+import MainStackNaviator from './Src/Navigators/MainStackNavigator';
 
 const store = createStore();
 
 const App = () => {
   return (
-    <Provider store={store}>
-      <Homepage />
-    </Provider>
+    <MainStackNaviator>
+      <Provider store={store}>
+        <Homepage />
+      </Provider>
+    </MainStackNaviator>
   );
 };
 
