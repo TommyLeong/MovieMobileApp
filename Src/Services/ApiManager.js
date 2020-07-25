@@ -105,4 +105,70 @@ const getSearchMovie = async (query) => {
   return result;
 };
 
-export {getAllMovies, getAllGenre, getSearchMovie};
+const getMovieActors = async (movieID) => {
+  const updatedEndpoint = Api.GET_MOVIE_ACTORS.replace(
+    'replaceWithMovieID',
+    movieID,
+  );
+  const hasInternet = await AppEnvCheck.deviceHasInternet;
+  let result = '';
+  if (hasInternet) {
+    await axios
+      .get(
+        EnvConfig.DOMAIN_URL + updatedEndpoint + `?api_key=${AppConfig.apiKey}`,
+      )
+      .then((res) => {
+        const is200 = httpStatusChecker(res.status);
+        if (is200) {
+          const data = res.data;
+          result = data;
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  } else {
+    Alert.alert(
+      'Device has no access to internet. Please try again after connected with Internet.',
+    );
+  }
+  return result;
+};
+
+const getMovieDetails = async (movieID) => {
+  const updatedEndpoint = Api.GET_MOVIE_DETAILS.replace(
+    'replaceWithMovieID',
+    movieID,
+  );
+  const hasInternet = await AppEnvCheck.deviceHasInternet;
+  let result = '';
+  if (hasInternet) {
+    await axios
+      .get(
+        EnvConfig.DOMAIN_URL + updatedEndpoint + `?api_key=${AppConfig.apiKey}`,
+      )
+      .then((res) => {
+        const is200 = httpStatusChecker(res.status);
+        if (is200) {
+          const data = res.data;
+          result = data;
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  } else {
+    Alert.alert(
+      'Device has no access to internet. Please try again after connected with Internet.',
+    );
+  }
+  return result;
+};
+
+export {
+  getAllMovies,
+  getAllGenre,
+  getSearchMovie,
+  getMovieActors,
+  getMovieDetails,
+};
