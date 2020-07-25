@@ -23,7 +23,7 @@ const httpStatusChecker = (httpStatus) => {
 
 const getAllMovies = async (page) => {
   const hasInternet = await AppEnvCheck.deviceHasInternet;
-  let result;
+  let result = '';
   if (hasInternet) {
     await axios
       .get(
@@ -50,6 +50,7 @@ const getAllMovies = async (page) => {
 };
 
 const getAllGenre = async () => {
+  let result = '';
   const hasInternet = await AppEnvCheck.deviceHasInternet;
   if (hasInternet) {
     axios
@@ -62,7 +63,7 @@ const getAllGenre = async () => {
         const is200 = httpStatusChecker(res.status);
         if (is200) {
           const data = res.data;
-          console.log(data);
+          result = data;
         }
       })
       .catch((e) => {
@@ -73,11 +74,12 @@ const getAllGenre = async () => {
       'Device has no access to internet. Please try again after connected with Internet.',
     );
   }
+  return result;
 };
 
 const getSearchMovie = async (query) => {
   const hasInternet = await AppEnvCheck.deviceHasInternet;
-  let result;
+  let result = '';
   if (hasInternet) {
     await axios
       .get(
