@@ -13,6 +13,6 @@ export default StyleSheet.create({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'blue',
+    // backgroundColor: 'green',
   },
 });

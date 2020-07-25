@@ -6,11 +6,11 @@ import Api from '../Services/Api';
 const MovieCard = (props) => {
   const navigation = props.routing.navigation;
   return (
-    <View style={styles.container} key={props.key}>
+    <View style={styles.container} key={props.movieID}>
       <TouchableOpacity
-        style={{width: 'auto', backgroundColor: 'red'}}
+        style={{width: 'auto'}}
         onPress={() => {
-          navigation.navigate('MovieDetails');
+          navigation.navigate('MovieDetails', {movieID: props.movieID});
         }}>
         <View style={styles.body}>
           <Image
