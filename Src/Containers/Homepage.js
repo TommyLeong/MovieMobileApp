@@ -32,16 +32,29 @@ class Homepage extends Component {
 
   componentDidUpdate = (prevProps) => {
     if (this.props.movieList && !prevProps.movieList) {
-      this.setState({
-        data: this.props.movieList.results,
-        completeLoading: true,
+      const newData = this.state.data;
+      this.props.movieList.results.map((result) => {
+        newData.push(result);
       });
+      this.setState((prevState) => ({
+        data: newData,
+        completeLoading: true,
+        page: prevState.page + 1,
+      }));
     }
   };
 
   getAllMoviesFromAPI = () => {
     // const data = await ApiManager.getAllMovies(this.state.page);
     this.props.getAllMovies(this.state.page);
+  };
+
+  isCloseToBottom = ({layoutMeasurement, contentOffset, contentSize}) => {
+    const paddingToBottom = 1500;
+    return (
+      layoutMeasurement.height + contentOffset.y >=
+      contentSize.height - paddingToBottom
+    );
   };
 
   renderMovieList = (movies) => {
@@ -134,9 +147,13 @@ class Homepage extends Component {
           onClear={this.getAllMoviesFromAPI}
         />
         <ScrollView
-          onScroll={() => {
+          onScroll={({nativeEvent}) => {
             Keyboard.dismiss();
-          }}>
+            if (this.isCloseToBottom(nativeEvent)) {
+              this.props.getAllMovies(this.state.page);
+            }
+          }}
+          scrollEventThrottle={400}>
           <View
             style={{
               paddingTop: 5,
