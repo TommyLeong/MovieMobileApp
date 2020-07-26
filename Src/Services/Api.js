@@ -4,5 +4,5 @@ export default {
   GET_SEARCH_MOVIE: '3/search/movie',
   GET_MOVIE_ACTORS: '3/movie/replaceWithMovieID/credits',
   GET_MOVIE_DETAILS: '/3/movie/replaceWithMovieID',
-  IMAGE_DOMAIN: 'http://image.tmdb.org/t/p/w185/',
+  IMAGE_DOMAIN: 'http://image.tmdb.org/t/p/w185',
 };
