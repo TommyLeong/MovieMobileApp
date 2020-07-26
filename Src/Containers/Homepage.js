@@ -32,9 +32,11 @@ class Homepage extends Component {
   componentDidUpdate = (prevProps) => {
     if (this.props.movieList && !prevProps.movieList) {
       const newData = this.state.data;
-      this.props.movieList.results.map((result) => {
-        newData.push(result);
-      });
+      if (this.props.movieList.results !== undefined) {
+        this.props.movieList.results.map((result) => {
+          newData.push(result);
+        });
+      }
       this.setState((prevState) => ({
         data: newData,
         completeLoading: true,

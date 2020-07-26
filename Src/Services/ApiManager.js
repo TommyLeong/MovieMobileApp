@@ -27,7 +27,7 @@ const getAllMovies = async (page) => {
   if (hasInternet) {
     await axios
       .get(
-        EnvConfig.DOMAIN_URL +
+        `https://api.themoviedb.org/` +
           Api.GET_ALL_MOVIES +
           `?api_key=${AppConfig.apiKey}&sort_by=popularity.desc&page=${page}`,
       )
@@ -55,7 +55,7 @@ const getAllGenre = async () => {
   if (hasInternet) {
     axios
       .get(
-        EnvConfig.DOMAIN_URL +
+        `https://api.themoviedb.org/` +
           Api.GET_GENRE_MOVIE_LIST +
           `?api_key=${AppConfig.apiKey}`,
       )
@@ -83,7 +83,7 @@ const getSearchMovie = async (query) => {
   if (hasInternet) {
     await axios
       .get(
-        EnvConfig.DOMAIN_URL +
+        `https://api.themoviedb.org/` +
           Api.GET_SEARCH_MOVIE +
           `?api_key=${AppConfig.apiKey}&query=${query}`,
       )
@@ -115,7 +115,9 @@ const getMovieActors = async (movieID) => {
   if (hasInternet) {
     await axios
       .get(
-        EnvConfig.DOMAIN_URL + updatedEndpoint + `?api_key=${AppConfig.apiKey}`,
+        `https://api.themoviedb.org/` +
+          updatedEndpoint +
+          `?api_key=${AppConfig.apiKey}`,
       )
       .then((res) => {
         const is200 = httpStatusChecker(res.status);
@@ -145,7 +147,9 @@ const getMovieDetails = async (movieID) => {
   if (hasInternet) {
     await axios
       .get(
-        EnvConfig.DOMAIN_URL + updatedEndpoint + `?api_key=${AppConfig.apiKey}`,
+        `https://api.themoviedb.org/` +
+          updatedEndpoint +
+          `?api_key=${AppConfig.apiKey}`,
       )
       .then((res) => {
         const is200 = httpStatusChecker(res.status);
