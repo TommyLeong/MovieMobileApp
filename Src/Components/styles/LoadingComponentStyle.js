@@ -1,9 +1,10 @@
-import {StyleSheet, Dimensions} from 'react-native';
+import {StyleSheet} from 'react-native';
+import AppConfig from '../../Configs/AppConfig';
 
 export default StyleSheet.create({
   container: {
-    height: Dimensions.get('window').height,
-    width: Dimensions.get('window').width,
+    height: AppConfig.mobileHeight,
+    width: AppConfig.mobileWidth,
     backgroundColor: 'rgba(0, 0, 0, 0.8)',
     alignSelf: 'center',
     justifyContent: 'center',
