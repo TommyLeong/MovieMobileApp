@@ -49,6 +49,19 @@ class Homepage extends Component {
     this.props.getAllMovies(this.state.page);
   };
 
+  onClearAction = () => {
+    this.setState(
+      {
+        page: 1,
+        data: [],
+        completeLoading: false,
+      },
+      () => {
+        this.getAllMoviesFromAPI();
+      },
+    );
+  };
+
   isCloseToBottom = ({layoutMeasurement, contentOffset, contentSize}) => {
     const paddingToBottom = 1500;
     return (
@@ -98,6 +111,7 @@ class Homepage extends Component {
         let data = [];
         if (this.state.search.length > 0) {
           data = await ApiManager.getSearchMovie(this.state.search);
+          this.refs.homepageScrollView.scrollTo({x: 0, y: 0, animated: false});
         } else {
           data = await ApiManager.getAllMovies(this.state.page);
         }
@@ -144,9 +158,10 @@ class Homepage extends Component {
           onChangeText={this.updateSearch}
           value={this.state.search}
           onSubmitEditing={this.searchMovie}
-          onClear={this.getAllMoviesFromAPI}
+          onClear={this.onClearAction}
         />
         <ScrollView
+          ref="homepageScrollView"
           onScroll={({nativeEvent}) => {
             Keyboard.dismiss();
             if (this.isCloseToBottom(nativeEvent)) {
