@@ -16,11 +16,11 @@ const store = createStore();
 
 const App = () => {
   return (
-    <MainStackNaviator>
-      <Provider store={store}>
+    <Provider store={store}>
+      <MainStackNaviator>
         <Homepage />
-      </Provider>
-    </MainStackNaviator>
+      </MainStackNaviator>
+    </Provider>
   );
 };
 
