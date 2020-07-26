@@ -13,6 +13,8 @@ import styles from './Styles/HomepageStyle';
 import MovieCard from '../Components/MovieCard';
 import {SearchBar} from 'react-native-elements';
 import Loading from '../Components/LoadingComponent';
+import {connect} from 'react-redux';
+import {getAllMovies} from '../Redux/Actions';
 
 class Homepage extends Component {
   constructor(props) {
@@ -24,16 +26,22 @@ class Homepage extends Component {
       completeLoading: false,
     };
   }
-  async componentDidMount() {
+  componentDidMount() {
     this.getAllMoviesFromAPI();
   }
 
-  getAllMoviesFromAPI = async () => {
-    const data = await ApiManager.getAllMovies(this.state.page);
-    this.setState({
-      data: data.results,
-      completeLoading: true,
-    });
+  componentDidUpdate = (prevProps) => {
+    if (this.props.movieList && !prevProps.movieList) {
+      this.setState({
+        data: this.props.movieList.results,
+        completeLoading: true,
+      });
+    }
+  };
+
+  getAllMoviesFromAPI = () => {
+    // const data = await ApiManager.getAllMovies(this.state.page);
+    this.props.getAllMovies(this.state.page);
   };
 
   renderMovieList = (movies) => {
@@ -57,7 +65,9 @@ class Homepage extends Component {
         );
       });
     }
-    return this.renderAlertBox();
+    if (this.props.movieList !== null) {
+      return this.renderAlertBox();
+    }
   };
 
   updateSearch = (search) => {
@@ -105,7 +115,7 @@ class Homepage extends Component {
       [
         {
           text: 'Retry',
-          onPress: () => console.log(this.getAllMoviesFromAPI()),
+          onPress: () => this.getAllMoviesFromAPI(),
         },
       ],
     );
@@ -150,4 +160,10 @@ class Homepage extends Component {
   }
 }
 
-export default Homepage;
+const mapStateToProps = ({general}) => ({
+  movieList: general.movieList,
+});
+
+export default connect(mapStateToProps, {
+  getAllMovies,
+})(Homepage);

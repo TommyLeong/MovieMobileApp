@@ -1,7 +1,7 @@
 import {
   GET_ALL_MOVIES,
   GET_ALL_MOVIES_SUCCESS,
-  GET_ALL_MOVIES_FAIL
+  GET_ALL_MOVIES_FAIL,
 } from '../types';
 
 const INITIAL_STATE = {
@@ -30,7 +30,7 @@ export default (state, action) => {
     case GET_ALL_MOVIES_FAIL:
       return {
         ...currentState,
-        movieList: action.payload,
+        movieList: [],
       };
 
     default:
