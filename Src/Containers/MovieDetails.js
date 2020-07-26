@@ -8,6 +8,7 @@ import ActorCard from '../Components/ActorCard';
 import {ScrollView} from 'react-native-gesture-handler';
 import AppConfig from '../Configs/AppConfig';
 import Loading from '../Components/LoadingComponent';
+import {ImageCheck} from '../Helpers/ImageCheck';
 
 class MovieDetails extends Component {
   constructor(props) {
@@ -132,17 +133,14 @@ class MovieDetails extends Component {
   };
 
   render() {
+    const imagePath = ImageCheck(this.state.responseDetails.backdrop_path);
+
     return (
       <View>
         {this.renderLoading()}
         <ScrollView>
           <View style={styles.container}>
-            <Image
-              style={{width: 'auto', height: 200}}
-              source={{
-                uri: `${Api.IMAGE_DOMAIN}${this.state.responseDetails.backdrop_path}`,
-              }}
-            />
+            <Image style={{width: 'auto', height: 200}} source={imagePath} />
             {this.renderMovieDetails()}
             {this.renderActors()}
           </View>

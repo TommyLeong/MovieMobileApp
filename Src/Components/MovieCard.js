@@ -2,9 +2,11 @@ import React from 'react';
 import styles from './styles/MovieCardStyle';
 import {View, Text, TouchableOpacity, Image} from 'react-native';
 import Api from '../Services/Api';
+import {ImageCheck} from '../Helpers/ImageCheck';
 
 const MovieCard = (props) => {
   const navigation = props.routing.navigation;
+  const imagePath = ImageCheck(props.poster);
   return (
     <View style={styles.container} key={props.movieID}>
       <TouchableOpacity
@@ -13,12 +15,7 @@ const MovieCard = (props) => {
           navigation.navigate('MovieDetails', {movieID: props.movieID});
         }}>
         <View style={styles.body}>
-          <Image
-            style={{width: 150, height: 250}}
-            source={{
-              uri: `${Api.IMAGE_DOMAIN}${props.poster}`,
-            }}
-          />
+          <Image style={{width: 150, height: 250}} source={imagePath} />
           <Text
             style={{
               textAlign: 'center',
