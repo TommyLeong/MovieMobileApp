@@ -1,11 +1,6 @@
 import {StyleSheet} from 'react-native';
 export default StyleSheet.create({
   container: {
-    // flex: 1,
-    // backgroundColor: 'green',
-    // display: 'flex',
-    // justifyContent: 'center',
-    // alignItems: 'center',
     width: 150,
     margin: 10,
   },
@@ -13,6 +8,15 @@ export default StyleSheet.create({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    // backgroundColor: 'green',
+  },
+  movieCardText: {
+    textAlign: 'center',
+    paddingTop: 5,
+    color: 'rgba(57, 58, 63, 1)',
+    fontWeight: '400',
+  },
+  movieCardImg: {
+    width: 150,
+    height: 250,
   },
 });

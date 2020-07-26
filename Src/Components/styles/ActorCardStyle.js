@@ -10,6 +10,10 @@ export default StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
   },
+  actorCardBodyImg: {
+    width: 100,
+    height: 150,
+  },
   actorCardBodyDetails: {
     flex: 1,
     display: 'flex',

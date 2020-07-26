@@ -9,7 +9,7 @@ import ActorProfile from '../Containers/ActorProfile';
 
 const Stack = createStackNavigator();
 
-const ChatFlow = () => {
+const MovieFlow = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator name="movie">
@@ -43,7 +43,6 @@ const ChatFlow = () => {
               backgroundColor: AppConfig.themeColor,
             },
           }}
-          //   options={{title: 'Group Screen'}}
         />
       </Stack.Navigator>
     </NavigationContainer>
@@ -51,7 +50,7 @@ const ChatFlow = () => {
 };
 
 const MainStackNavigator = () => {
-  return ChatFlow();
+  return MovieFlow();
 };
 
 export default MainStackNavigator;

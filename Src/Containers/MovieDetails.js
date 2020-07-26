@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {View, Text, Image, FlatList, Alert} from 'react-native';
 import * as ApiManager from '../Services/ApiManager';
 import axios from 'axios';
-import Api from '../Services/Api';
 import styles from './Styles/MovieDetailsStyle';
 import ActorCard from '../Components/ActorCard';
 import {ScrollView} from 'react-native-gesture-handler';
@@ -70,7 +69,7 @@ class MovieDetails extends Component {
         <Text style={[styles.detailsInfoHeader, {fontSize: AppConfig.title}]}>
           {this.state.responseDetails.original_title}
         </Text>
-        <View style={{display: 'flex', flexDirection: 'row'}}>
+        <View style={styles.detailsInfoItem}>
           <Text>{this.state.responseDetails.original_language} | </Text>
           <Text>{this.state.responseDetails.runtime} minutes | </Text>
           <Text>{this.state.responseDetails.release_date}</Text>
@@ -91,17 +90,11 @@ class MovieDetails extends Component {
     return (
       <View style={styles.actorInfomration}>
         <Text style={styles.detailsInfoHeader}>Cast</Text>
-        {/* {allActors.map((actor) => {
-          return <Text>{actor.name}</Text>;
-        })} */}
         <FlatList
           data={allActors}
           renderItem={(actor) => {
-            // console.log(actor);
-            // return <Text>{actor.item.name}</Text>;
             return <ActorCard actorInfo={actor} />;
           }}
-          // keyExtractor={all}
         />
       </View>
     );
@@ -140,7 +133,7 @@ class MovieDetails extends Component {
         {this.renderLoading()}
         <ScrollView>
           <View style={styles.container}>
-            <Image style={{width: 'auto', height: 200}} source={imagePath} />
+            <Image style={styles.detailsImageBanner} source={imagePath} />
             {this.renderMovieDetails()}
             {this.renderActors()}
           </View>

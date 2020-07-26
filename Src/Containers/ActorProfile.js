@@ -4,7 +4,7 @@ import {View, Text} from 'react-native';
 const ActorProfile = () => {
   return (
     <View>
-      <Text>I am movie detail</Text>
+      <Text>Actor Profile Page</Text>
     </View>
   );
 };

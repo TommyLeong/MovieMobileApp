@@ -3,7 +3,6 @@ import {
   View,
   Text,
   SafeAreaView,
-  FlatList,
   ScrollView,
   Keyboard,
   Alert,
@@ -169,21 +168,8 @@ class Homepage extends Component {
             }
           }}
           scrollEventThrottle={400}>
-          <View
-            style={{
-              paddingTop: 5,
-              display: 'flex',
-              alignItems: 'center',
-            }}>
-            {this.rennderTitle()}
-          </View>
-          <View
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              flexDirection: 'row',
-              flexWrap: 'wrap',
-            }}>
+          <View style={styles.titleView}>{this.rennderTitle()}</View>
+          <View style={styles.movieListView}>
             {this.renderMovieList(this.state.data)}
           </View>
         </ScrollView>

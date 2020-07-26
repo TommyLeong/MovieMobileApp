@@ -1,7 +1,6 @@
 import React from 'react';
 import {View, Image, Text} from 'react-native';
 import styles from './styles/ActorCardStyle';
-import Api from '../Services/Api';
 import {ImageCheck} from '../Helpers/ImageCheck';
 
 const ActorCard = (props) => {
@@ -11,7 +10,7 @@ const ActorCard = (props) => {
   return (
     <View style={styles.container}>
       <View style={styles.actorCardBody}>
-        <Image style={{width: 100, height: 150}} source={imagePath} />
+        <Image style={styles.actorCardBodyImg} source={imagePath} />
         <View style={styles.actorCardBodyDetails}>
           <Text style={styles.actorCardBodyTitle}>Actor Name</Text>
           <Text>{item.name}</Text>

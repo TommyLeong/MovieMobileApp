@@ -14,4 +14,6 @@ export default StyleSheet.create({
   actorInfomration: {
     padding: 10,
   },
+  detailsImageBanner: {width: 'auto', height: 200},
+  detailsInfoItem: {display: 'flex', flexDirection: 'row'},
 });
