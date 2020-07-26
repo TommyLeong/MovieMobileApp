@@ -6,11 +6,13 @@ import {
   FlatList,
   ScrollView,
   Keyboard,
+  Alert,
 } from 'react-native';
 import * as ApiManager from '../Services/ApiManager';
 import styles from './Styles/HomepageStyle';
 import MovieCard from '../Components/MovieCard';
 import {SearchBar} from 'react-native-elements';
+import Loading from '../Components/LoadingComponent';
 
 class Homepage extends Component {
   constructor(props) {
@@ -19,6 +21,7 @@ class Homepage extends Component {
       data: [],
       page: 1,
       search: '',
+      completeLoading: false,
     };
   }
   async componentDidMount() {
@@ -29,21 +32,32 @@ class Homepage extends Component {
     const data = await ApiManager.getAllMovies(this.state.page);
     this.setState({
       data: data.results,
+      completeLoading: true,
     });
   };
 
   renderMovieList = (movies) => {
-    if (movies === undefined) return <View />;
-    return movies.map((movie) => {
-      return (
-        <MovieCard
-          poster={movie.poster_path}
-          movieName={movie.title}
-          movieID={movie.id}
-          routing={this.props}
-        />
-      );
-    });
+    console.log(movies);
+    if (movies !== undefined) {
+      if (movies.length <= 0) {
+        return (
+          <View>
+            <Text>No movie found</Text>
+          </View>
+        );
+      }
+      return movies.map((movie) => {
+        return (
+          <MovieCard
+            poster={movie.poster_path}
+            movieName={movie.title}
+            movieID={movie.id}
+            routing={this.props}
+          />
+        );
+      });
+    }
+    return this.renderAlertBox();
   };
 
   updateSearch = (search) => {
@@ -52,28 +66,55 @@ class Homepage extends Component {
     });
   };
 
-  searchMovie = async () => {
-    let data = [];
-    if (this.state.search.length > 0) {
-      data = await ApiManager.getSearchMovie(this.state.search);
-      console.log(data);
-    } else {
-      data = await ApiManager.getAllMovies(this.state.page);
-    }
-    this.setState({
-      data: data.results,
-    });
+  searchMovie = () => {
+    this.setState(
+      {
+        completeLoading: false,
+      },
+      async () => {
+        let data = [];
+        if (this.state.search.length > 0) {
+          data = await ApiManager.getSearchMovie(this.state.search);
+        } else {
+          data = await ApiManager.getAllMovies(this.state.page);
+        }
+        this.setState({
+          data: data.results,
+          completeLoading: true,
+        });
+      },
+    );
   };
 
-  renderTitle = () => {
+  rennderTitle = () => {
     if (!this.state.search) {
       return <Text style={{fontWeight: 'bold'}}>Current Trending</Text>;
     }
   };
 
+  renderLoading = () => {
+    if (!this.state.completeLoading) {
+      return <Loading />;
+    }
+  };
+
+  renderAlertBox = () => {
+    Alert.alert(
+      'Error',
+      'We are sorry, there are some issues with the application. Please try again.',
+      [
+        {
+          text: 'Retry',
+          onPress: () => console.log(this.getAllMoviesFromAPI()),
+        },
+      ],
+    );
+  };
+
   render() {
     return (
       <SafeAreaView style={styles.container}>
+        {this.renderLoading()}
         <SearchBar
           lightTheme
           placeholder="Search Movie..."
@@ -92,7 +133,7 @@ class Homepage extends Component {
               display: 'flex',
               alignItems: 'center',
             }}>
-            {this.renderTitle()}
+            {this.rennderTitle()}
           </View>
           <View
             style={{
